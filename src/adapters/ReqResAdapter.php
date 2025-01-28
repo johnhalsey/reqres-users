@@ -4,17 +4,20 @@ namespace JohnHalsey\ReqresUsers\Adapters;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\GuzzleException;
 
 class ReqResAdapter
 {
-	public function __construct(private Client $client)
+	private $client;
+
+	public function __construct(Client $client = null)
 	{
+		// Automatically create the client if not provided
+		$this->client = $client ?? new Client();
 		$this->client->base_uri = 'https://reqres.in/api/';
 	}
 
 	/**
-	 * @throws GuzzleException
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public function get(string $url, array $query = []): ResponseInterface
 	{

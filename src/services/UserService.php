@@ -12,9 +12,14 @@ use JohnHalsey\ReqresUsers\Exceptions\CannotGetUserRequestException;
 
 class UserService
 {
-	public function __construct(private ReqResAdapter $adapter)
+	private ReqResAdapter $adapter;
+
+	public function __construct(ReqResAdapter $adapter = null)
 	{
+		// Automatically create the adapter if not provided
+		$this->adapter = $adapter ?? new ReqResAdapter();
 	}
+
 
 	/**
 	 * @throws ApiRequestError|CannotFindUserException
